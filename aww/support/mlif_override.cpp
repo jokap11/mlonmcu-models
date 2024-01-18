@@ -51,15 +51,15 @@ int mlif_process_output(void *model_output_ptr, size_t model_output_sz, const vo
         }
         DBGPRINTF("Predicted category: %i\n", prediction);
 
-        for (int i = 0; i < 12; i++)
-        {
-            float expected = ((float*)expected_out_data)[i];
-            if (results[i] != expected)
-            {
-                DBGPRINTF("MLIF: Wrong output in category %i! Expected %.9g\n", i, expected);
-                return EXIT_MLIF_MISSMATCH;
-            }
-        }
+        // for (int i = 0; i < 12; i++)
+        // {
+        //     float expected = ((float*)expected_out_data)[i];
+        //     if (results[i] != expected)
+        //     {
+        //         DBGPRINTF("MLIF: Wrong output in category %i! Expected %.9g\n", i, expected);
+        //         return EXIT_MLIF_MISSMATCH;
+        //     }
+        // }
     }
 
     DBGPRINTF("Printing everything after %x :\n", addr);

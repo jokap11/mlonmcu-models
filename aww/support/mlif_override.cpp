@@ -49,6 +49,8 @@ int mlif_process_output(void *model_output_ptr, size_t model_output_sz, const vo
                 prediction = i;
             }
         }
+        unsigned cat_addr = 0x800000;
+        *((volatile int32_t *)cat_addr) = prediction;
         DBGPRINTF("Predicted category: %i\n", prediction);
 
         // for (int i = 0; i < 12; i++)

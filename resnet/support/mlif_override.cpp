@@ -47,6 +47,8 @@ int mlif_process_output(void *model_output_ptr, size_t model_output_sz, const vo
                 prediction = i;
             }
         }
+        unsigned cat_addr = 0x800000;
+        *((volatile int32_t *)cat_addr) = prediction;
         DBGPRINTF("Predicted category: %i\n", prediction);
 
         // for (int i = 0; i < 10; i++)
@@ -63,7 +65,7 @@ int mlif_process_output(void *model_output_ptr, size_t model_output_sz, const vo
     DBGPRINTF("Printing everything after %x :\n", addr);
     for (size_t i = 0; i < model_output_sz; i++)
     {
-        int8_t written_byte = 0xFF; //Check if actually read
+        int8_t written_byte = 0xAD; //Check if actually read
         written_byte = *((int8_t*)model_output_ptr + i);
         *((volatile int8_t *)addr++) = written_byte;  //Little Endian so 44 is at 0x800100 = 0x11223344
         DBGPRINTF("Write hex number %#04hhx to memory \n", written_byte);

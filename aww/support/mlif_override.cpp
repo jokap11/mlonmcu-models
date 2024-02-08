@@ -67,9 +67,10 @@ int mlif_process_output(void *model_output_ptr, size_t model_output_sz, const vo
     DBGPRINTF("Printing everything after %x :\n", addr);
     for (size_t i = 0; i < model_output_sz; i++)
     {
-        int8_t written_byte = 0xDE; //Check if actually read
+        int32_t written_byte = 0xDEADBEEF; //Check if actually read
         written_byte = *((int8_t*)model_output_ptr + i);
-        *((volatile int8_t *)addr++) = written_byte;  //Little Endian so 44 is at 0x800100 = 0x11223344
+        *((volatile int32_t *)addr) = written_byte;  //Little Endian so 44 is at 0x800100 = 0x11223344
+        addr = addr +4;
         DBGPRINTF("Write hex number %#04hhx to memory \n", written_byte);
     }
 
